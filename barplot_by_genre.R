@@ -19,7 +19,7 @@ by_genre = base + geom_bar(aes(fill = Genre), width = 0.85) + coord_flip() +
     legend.position = "none",
     plot.title = element_text(size = 25, face = "bold", color = "#3f4c5e"),
     panel.background = element_rect(fill = "#E3E3E3"),
-    plot.background = element_rect(fill = "#F1F1F1")
+    plot.background = element_rect(fill = "#F1F1F1", color = "#F1F1F1")
   ) +
   labs(title = "Books Read in 2022", x = "Genre", y = "Count")
 

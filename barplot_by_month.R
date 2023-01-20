@@ -19,7 +19,7 @@ by_month = base + geom_bar(aes(fill = Genre), width = 0.85) +
     legend.key.size = unit(0.8, "cm"),
     legend.background = element_rect(fill = "#E3E3E3"),
     panel.background = element_rect(fill = "#E3E3E3"),
-    plot.background = element_rect(fill = "#F1F1F1"),
+    plot.background = element_rect(fill = "#F1F1F1", color = "#F1F1F1")
   ) +
   scale_x_discrete(limits = c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")) +
   labs(title = "Books Read in 2022", x = "Month Finished", y = "Count")
