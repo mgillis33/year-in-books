@@ -52,9 +52,10 @@ by_genre = base2 + geom_bar(aes(fill = Genre), width = 0.85) + coord_flip() +
 g = plot_grid(by_month,by_genre)
 ggdraw(g) +
   draw_image(
-    "/Users/mgillis/Desktop/Projects/books/books2022/1454549160-1454549160_goodreads_misc (1).png", scale = 0.2, x = 0.4, y = 0.35
-  ) +
+    "/Users/mgillis/Desktop/Projects/books/books2022/1454549160-1454549160_goodreads_misc (1).png", scale = 0.2, x = 0.4, y = 0.35) +
   theme(
     plot.background = element_rect(fill = "#F1F1F1"),
-    panel.border = element_rect(colour = "#3f4c5e", fill = NA, linewidth = 5)
-  )
+    panel.border = element_rect(colour = "#3f4c5e", fill = NA, linewidth = 5),
+    axis.title = element_text(family = "Roboto Condensed", face = "bold")
+  ) +
+  labs(title = "Books Read in 2022")
