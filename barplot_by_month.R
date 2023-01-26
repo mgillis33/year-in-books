@@ -27,7 +27,7 @@ by_month <- base + geom_bar(aes(fill = Genre), width = 0.85) +
   ) +
   # specify order of the bins on the x-axis
   scale_x_discrete(limits = c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")) +
-  labs(title = "Books Read in 2022", x = "Month Finished", y = "Count")
+  labs(title = "Books Read by Month", x = "Month Finished", y = "Count")
 
 by_month
 

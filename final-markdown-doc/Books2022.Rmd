@@ -1,26 +1,39 @@
 ---
-title: "Books Read in 2022"
+title: "**2022 Year in Books**"
 author: "Michael Gillis"
 output:
   html_document:
     toc: FALSE
+    theme:
+      base_font: "Roboto Condensed"
 ---
-
 ```{r include=FALSE}
 
 # load packages
 library(tidyverse)
-library(forcats)
-
-```
-
-
-# Books Graph
-
-```{r echo=FALSE}
 
 # load data
 data <- read.csv("/Users/mgillis/Desktop/Projects/books/books2022/Goodreads 2022.csv")
+
+```
+
+---
+Every year I track the books that I read through the website Goodreads. Goodreads is a website that began in 2006, and has since been purchased by Amazon, that allows for a user to select books from their extensive catalog, adding the books to shelves like "Read" and "Want to Read." Users can also rate books using a 5 star rating system.
+
+At the end of every year, Goodreads compiles a "Year in Books" for each user. It displays different data, such as total pages read, total books read, and average rating. I found myself wishing that Goodreads would provide more in this annual summary, which lead me to realize that all of the data I needed to create my own exists within the Goodreads catlogue already.
+
+Without further ado, here is my year in books:
+
+# Stats by Month, Genre
+
+
+```{r echo=FALSE, figures-side, fig.show="hold", out.width="50%"}
+
+##############
+## Barplots ##
+##############
+
+## Barplot by Month
 
 # build barplot
 base <- ggplot(data = data, mapping = aes(x = Month.Finished))
@@ -35,7 +48,7 @@ by_month <- base + geom_bar(aes(fill = Genre), width = 0.85) +
     axis.text.y = element_text(size = 15),
     axis.title.x = element_text(size = 18, face = "bold", color = "#3f4c5e", vjust = -2),
     axis.title.y = element_text(size = 18, face = "bold", color = "#3f4c5e", vjust = 5),
-    plot.margin = margin(1.5, 1.5, 1.5, 1.5, "cm"),
+    plot.margin = margin(1.5,1.5,1.5,1.5, "cm"),
     plot.title = element_text(size = 25, face = "bold", color = "#3f4c5e"),
     legend.title = element_text(size = 15, face = "bold", color = "#3f4c5e"),
     legend.key.size = unit(0.8, "cm"),
@@ -45,13 +58,16 @@ by_month <- base + geom_bar(aes(fill = Genre), width = 0.85) +
   ) +
   # specify order of the bins on the x-axis
   scale_x_discrete(limits = c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")) +
-  labs(title = "Books Read in 2022", x = "Month Finished", y = "Count")
+  labs(title = "Books Read by Month", x = "Month Finished", y = "Count")
 
+# display plot
 by_month
 
+## Barplot by Genre
+
 # build barplot
-base = ggplot(data, aes(x = fct_rev(fct_infreq(Genre))))
-by_genre = base + geom_bar(aes(fill = Genre), width = 0.85) + coord_flip() +
+base <- ggplot(data, aes(x = fct_rev(fct_infreq(Genre))))
+by_genre <- base + geom_bar(aes(fill = Genre), width = 0.85) + coord_flip() +
   # use gradient colors to fill the bars based on different genres
   scale_fill_manual(values = c("#061429","#222f43","#3f4c5e","#5e6b7b","#808c98","#a3aeb7","#c9d1d7","#f0f5f8")) +
   geom_text(aes(label = after_stat(count)), stat = "count", color = "#3f4c5e", hjust = -0.3, fontface = "bold", family = "Roboto Condensed") +
@@ -69,8 +85,15 @@ by_genre = base + geom_bar(aes(fill = Genre), width = 0.85) + coord_flip() +
     panel.background = element_rect(fill = "#E3E3E3"),
     plot.background = element_rect(fill = "#F1F1F1", color = "#F1F1F1")
   ) +
-  labs(title = "Books Read in 2022", x = "Genre", y = "Count")
+  labs(title = "Books Read by Genre", x = "Genre", y = "Count")
 
+#display plot
 by_genre
+```
+
+
+
+```{r echo=FALSE}
+
 ```
 
