@@ -1,2 +1,2 @@
-# Books 2022
-Tracking my books read by year, compiling into different forms of Data Visualization (Data directly from Goodreads catalogue).
+# Year In Books
+Tracking my books read by year, compiling into an R Markdown document. (Data directly from Goodreads catalogue).
