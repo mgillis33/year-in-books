@@ -1,10 +1,14 @@
+# load packages
 library(tidyverse)
 library(forcats)
 
-data = read.csv("/Users/mgillis/Desktop/Projects/books/2022/Goodreads 2022.csv")
+# load data
+data = read.csv("/Users/mgillis/Desktop/Projects/books/books2022/Goodreads 2022.csv")
 
+# build barplot
 base = ggplot(data, aes(x = fct_rev(fct_infreq(Genre))))
 by_genre = base + geom_bar(aes(fill = Genre), width = 0.85) + coord_flip() +
+  # use gradient colors to fill the bars based on different genres
   scale_fill_manual(values = c("#061429","#222f43","#3f4c5e","#5e6b7b","#808c98","#a3aeb7","#c9d1d7","#f0f5f8")) +
   geom_text(aes(label = after_stat(count)), stat = "count", color = "#3f4c5e", hjust = -0.3, fontface = "bold", family = "Roboto Condensed") +
   theme(
