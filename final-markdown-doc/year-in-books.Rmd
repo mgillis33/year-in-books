@@ -56,7 +56,7 @@ At the end of every year, Goodreads compiles a "Year in Books" for each user. It
 
 Without further ado, here is my year in books:
 
-# **Stats by Month, Genre**
+# **Books**
 
 ```{r echo=FALSE, fig.show="hold", out.width="50%"}
 
@@ -122,6 +122,7 @@ by_genre <- base + geom_bar(aes(fill = Genre), width = 0.85) + coord_flip() +
 by_genre
 ```
 
+I read a total of **`r nrow(data)`** books this year.\
 The genre I read the most of this year was **`r colorize(getmode(data$Genre),"#3f4c5e")`**, with a total of **`r colorize(max(table(data$Genre)),"#3f4c5e")` `r colorize(getmode(data$Genre),"#3f4c5e")`** books read.\
 I read the most books in **`r colorize(getmode(data$Month),"#3f4c5e")`**, with a total of **`r colorize(max(table(data$Month)), "#3f4c5e")`** books read that month.
 
@@ -230,7 +231,12 @@ sum_linechart
 
 ```
 
-I read the most pages in **`r colorize(max(page_sums), "#3f4c5e")`**
+I read a total of **`r sum(data$Pages)`** this year.\
+I read the most pages in **`r colorize(table$month[which.max(table$page_sums)], "#3f4c5e")`** reading a total of **`r colorize(max(table$page_sums), "#3f4c5e")`** pages that month.
+
+# **Reviews**
+
+
 
 # **Sources**
 
