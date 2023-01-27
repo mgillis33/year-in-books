@@ -21,12 +21,15 @@ page_sums <- c(sum(data[which(data$Month.Finished == "January"), 5]),
                sum(data[which(data$Month.Finished == "November"), 5]),
                sum(data[which(data$Month.Finished == "December"), 5]))
 
+# create a row vector that contains a cumulative sum for each month
+cum_pages <- cumsum(page_sums)
+
 #turn those two columns into a data frame
 table <- data.frame(months,page_sums)
 
 # build line chart
-base <- ggplot(table, aes(x = months, y = page_sums, group = 1))
-linechart <- base + geom_line(stat = "identity", color = "#808c98", linewidth = 1.25) +
+base <- ggplot(table, aes(x = months, y = cum_pages, group = 1))
+sum_linechart <- base + geom_line(stat = "identity", color = "#808c98", linewidth = 1.25) +
   geom_point(stat = "identity", color = "#3f4c5e", size = 2.5) +
   # use gradient colors to fill the bars based on different genres
   theme(
@@ -47,7 +50,6 @@ linechart <- base + geom_line(stat = "identity", color = "#808c98", linewidth = 
     plot.background = element_rect(fill = "#F1F1F1", color = "#F1F1F1")
   ) +
   scale_x_discrete(limits = c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")) +
-  labs(title = "Pages Read by Month", x = "Month", y = "Pages")
+  labs(title = "Cumulative Pages Read by Month", x = "Month", y = "Pages")
 
-  
-linechart
+sum_linechart
