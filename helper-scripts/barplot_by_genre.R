@@ -2,7 +2,7 @@
 library(tidyverse)
 
 # load data
-data <- read.csv("/Users/mgillis/Desktop/Projects/books/books2022/Goodreads 2022.csv")
+data <- read.csv("/Users/mgillis/Desktop/Projects/year-in-books/2022/Goodreads 2022.csv")
 
 # build barplot
 base <- ggplot(data, aes(x = fct_rev(fct_infreq(Genre))))

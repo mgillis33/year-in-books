@@ -2,10 +2,10 @@
 library(tidyverse)
 
 # load data
-data <- read.csv("/Users/mgillis/Desktop/Projects/books/books2022/Goodreads 2022.csv")
+data <- read.csv("/Users/mgillis/Desktop/Projects/year-in-books/2022/Goodreads 2022.csv")
 
 # build barplot
-base <- ggplot(data = data, mapping = aes(x = Month.Finished))
+base <- ggplot(data, aes(x = Month.Finished))
 by_month <- base + geom_bar(aes(fill = Genre), width = 0.85) +
   # use gradient colors to fill the bars based on different genres
   scale_fill_manual(values = c("#061429","#222f43","#3f4c5e","#5e6b7b","#808c98","#a3aeb7","#c9d1d7","#f0f5f8")) +
@@ -30,4 +30,3 @@ by_month <- base + geom_bar(aes(fill = Genre), width = 0.85) +
   labs(title = "Books Read by Month", x = "Month Finished", y = "Count")
 
 by_month
-

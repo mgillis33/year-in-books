@@ -5,15 +5,47 @@ output:
   html_document:
     toc: FALSE
     theme:
+      text_align: center
       base_font: "Roboto Condensed"
 ---
+
+<style type="text/css">
+
+h1.title {
+  font-size: 75px;
+  color: #3f4c5e;
+  text-align: center;
+}
+h4.author {
+  font-size: 30px;
+  color: #3f4c5e;
+  text-align: center;
+}
+</style>
+
 ```{r include=FALSE}
 
 # load packages
 library(tidyverse)
 
 # load data
-data <- read.csv("/Users/mgillis/Desktop/Projects/books/books2022/Goodreads 2022.csv")
+data <- read.csv("/Users/mgillis/Desktop/Projects/year-in-books/2022/Goodreads 2022.csv")
+
+# create mode function
+getmode <- function(v) {
+   uniqv <- unique(v)
+   uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+
+# create colorize function
+colorize <- function(x, color) {
+  if (knitr::is_latex_output()) {
+    sprintf("\\textcolor{%s}{%s}", color, x)
+  } else if (knitr::is_html_output()) {
+    sprintf("<span style='color: %s;'>%s</span>", color,
+      x)
+  } else x
+}
 
 ```
 
@@ -24,8 +56,7 @@ At the end of every year, Goodreads compiles a "Year in Books" for each user. It
 
 Without further ado, here is my year in books:
 
-# Stats by Month, Genre
-
+# **Stats by Month, Genre**
 
 ```{r echo=FALSE, figures-side, fig.show="hold", out.width="50%"}
 
@@ -91,9 +122,9 @@ by_genre <- base + geom_bar(aes(fill = Genre), width = 0.85) + coord_flip() +
 by_genre
 ```
 
+The genre I read the most of this year was **`r colorize(getmode(data$Genre),"#3f4c5e")`**, with a total of **`r colorize(max(table(data$Genre)),"#3f4c5e")` `r colorize(getmode(data$Genre),"#3f4c5e")`** books read.\
+I read the most books in **`r colorize(getmode(data$Month),"#3f4c5e")`**, with a total of **`r colorize(max(table(data$Month)), "#3f4c5e")`** books read that month.
 
+# **Sources**
 
-```{r echo=FALSE}
-
-```
-
+https://bookdown.org/yihui/rmarkdown-cookbook/font-color.html
