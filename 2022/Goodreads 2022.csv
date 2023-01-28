@@ -1,48 +1,48 @@
-﻿Month Finished,Title,Author,Genre,Pages,My Rating,GR Rating
-December,Pastime,Robert B. Parker,Mystery,223,3,3.99
-December,Prayers for Rain,Dennis Lehane,Mystery,416,4,4.09
-December,Digital Fortress,Dan Brown,Thriller,525,3,3.69
-December,Multivariable Calculus,James Stewart,Textbook,512,,3.82
-December,"Gone, Baby, Gone",Dennis Lehane,Mystery,432,4,4.15
-November,Stardust,Robert B. Parker,Mystery,268,4,3.92
-November,Racing the Light,Robert Crais,Mystery,355,3,4.29
-November,Mystic River,Dennis Lehane,Mystery,448,5,4.16
-November,Sacred,Dennis Lehane,Mystery,416,3,3.95
-November,"Darkness, Take My Hand",Dennis Lehane,Mystery,480,5,4.17
-October,The Cuckoo's Egg,Clifford Stoll,Nonfiction,399,5,4.27
-October,Playmates,Robert B. Parker,Mystery,272,3,3.94
-October,Since We Fell,Dennis Lehane,Thriller,419,3,3.61
-October,The Drop,Dennis Lehane,Mystery,224,3,3.74
-October,Crimson Joy,Robert B. Parker,Mystery,211,4,3.96
-September,Pale Kings and Princes,Robert B. Parker,Mystery,256,3,4.01
-September,Taming A Sea-Horse,Robert B. Parker,Mystery,250,3,3.97
-September,Back of Beyond,C.J. Box,Thriller,372,5,4.09
-August,Unbound,Stuart Woods,Thriller,318,1,3.98
-August,A Drink Before the War,Dennis Lehane,Mystery,282,4,3.94
-August,Hostage,Robert Crais,Thriller,478,3,4.04
-August,Alan Turing,David Boyle,Nonfiction,112,2,3.6
-August,Shutter Island,Dennis Lehane,Mystery,385,5,4.1
-August,A Catskill Eagle,Robert B. Parker,Mystery,311,3,4.05
-August,Valediction,Robert B. Parker,Mystery,228,3,4.05
-July,The Widening Gyre,Robert B. Parker,Mystery,183,4,3.99
-May,Ceremony,Robert B. Parker,Mystery,219,4,4
-May,A Savage Place,Robert B. Parker,Mystery,192,4,4
-May,Early Autumn,Robert B. Parker,Mystery,221,5,4.14
-May,Looking for Rachel Wallace,Robert B. Parker,Mystery,219,5,4.1
-May,The Judas Goat,Robert B. Parker,Mystery,207,3,4.07
-May,Promised Land,Robert B. Parker,Mystery,218,3,3.97
-April,Mortal Stakes,Robert B. Parker,Mystery,192,5,4.01
-April,God Save the Child,Robert B. Parker,Mystery,205,4,3.95
-April,The Judge's List,John Grisham,Thriller,357,2,4.17
-April,Project Hail Mary,Andy Weir,Science Fiction,476,5,4.52
-March,The Martian,Andy Weir,Science Fiction,387,5,4.41
-March,The Promise,Robert Crais,Mystery,402,4,4.24
-March,Demolition Angel,Robert Crais,Thriller,480,5,4.03
-March,The Fall of Gondolin,J.R.R. Tolkein,Fantasy,304,2,4.06
-February,The Godwulf Manuscript,Robert B. Parker,Mystery,208,4,3.92
-February,The Return of the King,J.R.R. Tolkein,Fantasy,406,5,4.55
-February,The Two Towers,J.R.R. Tolkein,Fantasy,323,5,4.47
-February,The Fellowship of the Ring,J.R.R. Tolkein,Fantasy,407,5,4.38
-January,Hamlet,William Shakespeare,Tragedy,342,3,4.03
-January,Oedipus Rex,Sophocles,Tragedy,75,4,3.72
-January,Mini Math Crosswords,Brendan Sullivan,Puzzle,82,,5
+﻿Month Finished,Title,Author,Genre,Pages,My Rating,GR Rating,Favorite
+December,Pastime,Robert B. Parker,Mystery,223,3,3.99,N
+December,Prayers for Rain,Dennis Lehane,Mystery,416,4,4.09,N
+December,Digital Fortress,Dan Brown,Thriller,525,3,3.69,N
+December,Multivariable Calculus,James Stewart,Textbook,512,,3.82,N
+December,"Gone, Baby, Gone",Dennis Lehane,Mystery,432,4,4.15,N
+November,Stardust,Robert B. Parker,Mystery,268,4,3.92,N
+November,Racing the Light,Robert Crais,Mystery,355,3,4.29,N
+November,Mystic River,Dennis Lehane,Mystery,448,5,4.16,Y
+November,Sacred,Dennis Lehane,Mystery,416,3,3.95,N
+November,"Darkness, Take My Hand",Dennis Lehane,Mystery,480,5,4.17,Y
+October,The Cuckoo's Egg,Clifford Stoll,Nonfiction,399,5,4.27,N
+October,Playmates,Robert B. Parker,Mystery,272,3,3.94,N
+October,Since We Fell,Dennis Lehane,Thriller,419,3,3.61,N
+October,The Drop,Dennis Lehane,Mystery,224,3,3.74,N
+October,Crimson Joy,Robert B. Parker,Mystery,211,4,3.96,N
+September,Pale Kings and Princes,Robert B. Parker,Mystery,256,3,4.01,N
+September,Taming A Sea-Horse,Robert B. Parker,Mystery,250,3,3.97,N
+September,Back of Beyond,C.J. Box,Thriller,372,5,4.09,N
+August,Unbound,Stuart Woods,Thriller,318,1,3.98,N
+August,A Drink Before the War,Dennis Lehane,Mystery,282,4,3.94,N
+August,Hostage,Robert Crais,Thriller,478,3,4.04,N
+August,Alan Turing,David Boyle,Nonfiction,112,2,3.6,N
+August,Shutter Island,Dennis Lehane,Mystery,385,5,4.1,Y
+August,A Catskill Eagle,Robert B. Parker,Mystery,311,3,4.05,N
+August,Valediction,Robert B. Parker,Mystery,228,3,4.05,N
+July,The Widening Gyre,Robert B. Parker,Mystery,183,4,3.99,N
+May,Ceremony,Robert B. Parker,Mystery,219,4,4,N
+May,A Savage Place,Robert B. Parker,Mystery,192,4,4,N
+May,Early Autumn,Robert B. Parker,Mystery,221,5,4.14,Y
+May,Looking for Rachel Wallace,Robert B. Parker,Mystery,219,5,4.1,N
+May,The Judas Goat,Robert B. Parker,Mystery,207,3,4.07,N
+May,Promised Land,Robert B. Parker,Mystery,218,3,3.97,N
+April,Mortal Stakes,Robert B. Parker,Mystery,192,5,4.01,N
+April,God Save the Child,Robert B. Parker,Mystery,205,4,3.95,N
+April,The Judge's List,John Grisham,Thriller,357,2,4.17,N
+April,Project Hail Mary,Andy Weir,Science Fiction,476,5,4.52,Y
+March,The Martian,Andy Weir,Science Fiction,387,5,4.41,Y
+March,The Promise,Robert Crais,Mystery,402,4,4.24,N
+March,Demolition Angel,Robert Crais,Thriller,480,5,4.03,N
+March,The Fall of Gondolin,J.R.R. Tolkein,Fantasy,304,2,4.06,N
+February,The Godwulf Manuscript,Robert B. Parker,Mystery,208,4,3.92,N
+February,The Return of the King,J.R.R. Tolkein,Fantasy,406,5,4.55,Y
+February,The Two Towers,J.R.R. Tolkein,Fantasy,323,5,4.47,Y
+February,The Fellowship of the Ring,J.R.R. Tolkein,Fantasy,407,5,4.38,Y
+January,Hamlet,William Shakespeare,Tragedy,342,3,4.03,N
+January,Oedipus Rex,Sophocles,Tragedy,75,4,3.72,N
+January,Mini Math Crosswords,Brendan Sullivan,Puzzle,82,,5,N
