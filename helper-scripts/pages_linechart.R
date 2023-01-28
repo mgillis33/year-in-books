@@ -4,7 +4,7 @@ library(tidyverse)
 # load data
 data <- read.csv("/Users/mgillis/Desktop/Projects/year-in-books/2022/Goodreads 2022.csv")
 
-#get a row vector of the months.
+# get a row vector of the months.
 months <- c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
 
 # get page sums by month into a row vector
@@ -21,10 +21,10 @@ page_sums <- c(sum(data[which(data$Month.Finished == "January"), 5]),
                sum(data[which(data$Month.Finished == "November"), 5]),
                sum(data[which(data$Month.Finished == "December"), 5]))
 
-#turn those two columns into a data frame
+# turn those two columns into a data frame
 table <- data.frame(months,page_sums)
 
-# build linechart
+## build linechart
 
 # initialize
 pages_linechart <- ggplot(table, aes(x = months, y = page_sums, group = 1)) +

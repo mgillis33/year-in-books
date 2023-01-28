@@ -6,7 +6,7 @@ data <- read.csv("/Users/mgillis/Desktop/Projects/year-in-books/2022/Goodreads 2
 
 ## build barplot
 
-#initialize
+# initialize
 by_genre <- ggplot(data, aes(x = fct_rev(fct_infreq(Genre)))) +
   # flip the coordinates
   coord_flip() +
