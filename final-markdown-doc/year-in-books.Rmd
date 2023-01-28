@@ -65,6 +65,7 @@ inline_format <- function(x) {
 }
 
 knit_hooks$set(inline=inline_format)
+
 ```
 
 ---
@@ -78,66 +79,74 @@ Without further ado, here is my year in books:
 
 ```{r echo=FALSE, fig.show="hold", out.width="50%"}
 
-##############
-## Barplots ##
-##############
+## build barplot
 
-## Barplot by Month
-
-# build barplot
-base <- ggplot(data = data, mapping = aes(x = Month.Finished))
-by_month <- base + geom_bar(aes(fill = Genre), width = 0.85) +
+# initialize
+by_month <- ggplot(data, aes(x = Month.Finished)) +
+  # plot the bars
+  geom_bar(aes(fill = Genre), width = 0.85) +
   # use gradient colors to fill the bars based on different genres
   scale_fill_manual(values = c("#061429","#222f43","#3f4c5e","#5e6b7b","#808c98","#a3aeb7","#c9d1d7","#f0f5f8")) +
+  # specify order of the bins on the x-axis
+  scale_x_discrete(limits = c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")) +
+  # add plot labels
+  labs(title = "Books Read by Month", x = "Month Finished", y = "Count") +
+  # add theme elements
   theme(
     aspect.ratio = 9/16,
+    plot.margin = margin(1.5, 1.5, 1.5, 1.5, "cm"),
     text = element_text(family = "Roboto Condensed"),
-    panel.grid = element_blank(),
     axis.text.x = element_text(size = 10, angle = 30, vjust = 0.6),
     axis.text.y = element_text(size = 15),
     axis.title.x = element_text(size = 18, face = "bold", color = "#3f4c5e", vjust = -2),
     axis.title.y = element_text(size = 18, face = "bold", color = "#3f4c5e", vjust = 5),
-    plot.margin = margin(1.5,1.5,1.5,1.5, "cm"),
     plot.title = element_text(size = 25, face = "bold", color = "#3f4c5e"),
     legend.title = element_text(size = 15, face = "bold", color = "#3f4c5e"),
     legend.key.size = unit(0.8, "cm"),
     legend.background = element_rect(fill = "#E3E3E3"),
+    panel.grid = element_blank(),
     panel.background = element_rect(fill = "#E3E3E3"),
     plot.background = element_rect(fill = "#F1F1F1", color = "#F1F1F1")
-  ) +
-  # specify order of the bins on the x-axis
-  scale_x_discrete(limits = c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")) +
-  labs(title = "Books Read by Month", x = "Month Finished", y = "Count")
+  )
 
-# display plot
+# display the plot
 by_month
 
-## Barplot by Genre
+## build barplot
 
-# build barplot
-base <- ggplot(data, aes(x = fct_rev(fct_infreq(Genre))))
-by_genre <- base + geom_bar(aes(fill = Genre), width = 0.85) + coord_flip() +
+#initialize
+by_genre <- ggplot(data, aes(x = fct_rev(fct_infreq(Genre)))) +
+  # flip the coordinates
+  coord_flip() +
+  # plot the bars
+  geom_bar(aes(fill = Genre), width = 0.85) +
+  # add the data labels
+  geom_text(aes(label = after_stat(count)), stat = "count", color = "#3f4c5e", hjust = -0.3, fontface = "bold", family = "Roboto Condensed") +
   # use gradient colors to fill the bars based on different genres
   scale_fill_manual(values = c("#061429","#222f43","#3f4c5e","#5e6b7b","#808c98","#a3aeb7","#c9d1d7","#f0f5f8")) +
-  geom_text(aes(label = after_stat(count)), stat = "count", color = "#3f4c5e", hjust = -0.3, fontface = "bold", family = "Roboto Condensed") +
+  # change the limits of the y axis (flipped)
+  scale_y_continuous(limits = c(0,30)) +
+  # add the plot labels
+  labs(title = "Books Read by Genre", x = "Genre", y = "Count") +
+  # add theme elements
   theme(
     aspect.ratio = 9/16,
     plot.margin = margin(1, 1, 1, 1, "cm"),
     text = element_text(family = "Roboto Condensed"),
-    panel.grid = element_blank(),
     axis.text.x = element_text(size = 10, vjust = 0.1),
     axis.text.y = element_text(size = 10, angle = 35, hjust = 0.5),
     axis.title.x = element_text(size = 18, face = "bold", vjust = -0.6, color = "#3f4c5e"),
     axis.title.y = element_text(size = 18, face = "bold", vjust = 1, color = "#3f4c5e"),
     legend.position = "none",
     plot.title = element_text(size = 25, face = "bold", color = "#3f4c5e"),
+    panel.grid = element_blank(),
     panel.background = element_rect(fill = "#E3E3E3"),
     plot.background = element_rect(fill = "#F1F1F1", color = "#F1F1F1")
-  ) +
-  labs(title = "Books Read by Genre", x = "Genre", y = "Count")
+  )
 
-#display plot
+#display the plot
 by_genre
+
 ```
 
 I read a total of `r nrow(data)` books this year.\
@@ -146,8 +155,6 @@ I read the most books in `r getmode(data$Month)`, with a total of `r max(table(d
 
 # **Pages**
 ```{r echo=FALSE, fig.show="hold", out.width="50%"}
-
-## line chart by month
 
 #get a row vector of the months.
 months <- c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
@@ -169,88 +176,132 @@ page_sums <- c(sum(data[which(data$Month.Finished == "January"), 5]),
 #turn those two columns into a data frame
 table <- data.frame(months,page_sums)
 
-# build line chart
-base <- ggplot(table, aes(x = months, y = page_sums, group = 1))
-linechart <- base + geom_line(stat = "identity", color = "#808c98", linewidth = 1.25) +
+# build linechart
+
+# initialize
+pages_linechart <- ggplot(table, aes(x = months, y = page_sums, group = 1)) +
+  # plot the line
+  geom_line(stat = "identity", color = "#808c98", linewidth = 1.25) +
+  # plot the points
   geom_point(stat = "identity", color = "#3f4c5e", size = 2.5) +
-  # use gradient colors to fill the bars based on different genres
+  # specify order of the bins on the x-axis
+  scale_x_discrete(limits = c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")) +
+  # add plot labels
+  labs(title = "Pages Read by Month", x = "Month", y = "Pages") +
+  # add theme elements
   theme(
     plot.margin = margin(1, 1, 1, 1, "cm"),
     text = element_text(family = "Roboto Condensed"),
-    panel.grid.major.x = element_blank(),
-    panel.grid.minor.x = element_blank(),
-    panel.grid.minor.y = element_blank(),
-    panel.grid.major.y = element_line(color = "#F1F1F1"),
     axis.text.x = element_text(size = 10, angle = 30, vjust = 0.55),
     axis.text.y = element_text(size = 15, hjust = 0.5),
     axis.title.x = element_text(size = 18, face = "bold", vjust = -0.6, color = "#3f4c5e"),
     axis.title.y = element_text(size = 18, face = "bold", vjust = 1.5, color = "#3f4c5e"),
-    legend.position = "none",
     plot.title = element_text(size = 25, face = "bold", color = "#3f4c5e"),
-    panel.background = element_rect(fill = "#E3E3E3"),
-    plot.background = element_rect(fill = "#F1F1F1", color = "#F1F1F1")
-  ) +
-  scale_x_discrete(limits = c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")) +
-  labs(title = "Pages Read by Month", x = "Month", y = "Pages")
-
-  
-linechart
-
-## cumulative line chart
-
-#get a row vector of the months.
-months <- c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
-
-# get page sums by month into a row vector
-page_sums <- c(sum(data[which(data$Month.Finished == "January"), 5]),
-               sum(data[which(data$Month.Finished == "February"), 5]),
-               sum(data[which(data$Month.Finished == "March"), 5]),
-               sum(data[which(data$Month.Finished == "April"), 5]),
-               sum(data[which(data$Month.Finished == "May"), 5]),
-               sum(data[which(data$Month.Finished == "June"), 5]),
-               sum(data[which(data$Month.Finished == "July"), 5]),
-               sum(data[which(data$Month.Finished == "August"), 5]),
-               sum(data[which(data$Month.Finished == "September"), 5]),
-               sum(data[which(data$Month.Finished == "October"), 5]),
-               sum(data[which(data$Month.Finished == "November"), 5]),
-               sum(data[which(data$Month.Finished == "December"), 5]))
-
-# create a row vector that contains a cumulative sum for each month
-cum_pages <- cumsum(page_sums)
-
-#turn those two columns into a data frame
-table2 <- data.frame(months,cum_pages)
-
-# build line chart
-base <- ggplot(table, aes(x = months, y = cum_pages, group = 1))
-sum_linechart <- base + geom_line(stat = "identity", color = "#808c98", linewidth = 1.25) +
-  geom_point(stat = "identity", color = "#3f4c5e", size = 2.5) +
-  # use gradient colors to fill the bars based on different genres
-  theme(
-    plot.margin = margin(1, 1, 1, 1, "cm"),
-    text = element_text(family = "Roboto Condensed"),
     panel.grid.major.x = element_blank(),
     panel.grid.minor.x = element_blank(),
     panel.grid.minor.y = element_blank(),
     panel.grid.major.y = element_line(color = "#F1F1F1"),
+    panel.background = element_rect(fill = "#E3E3E3"),
+    plot.background = element_rect(fill = "#F1F1F1", color = "#F1F1F1")
+  )
+
+# display the plot
+pages_linechart
+
+# create a row vector that contains a cumulative sum for each month
+cum_pages <- cumsum(page_sums)
+
+# turn those two columns into a data frame
+table2 <- data.frame(months,cum_pages)
+
+## build linechart
+
+# initialize
+sum_linechart <- ggplot(table, aes(x = months, y = cum_pages, group = 1)) +
+  # plot the line
+  geom_line(stat = "identity", color = "#808c98", linewidth = 1.25) +
+  # plot the points
+  geom_point(stat = "identity", color = "#3f4c5e", size = 2.5) +
+  # specify order of the bins on the x-axis
+  scale_x_discrete(limits = c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")) +
+  # add plot labels
+  labs(title = "Cumulative Pages Read by Month", x = "Month", y = "Pages") +
+  # add theme elements
+  theme(
+    plot.margin = margin(1, 1, 1, 1, "cm"),
+    text = element_text(family = "Roboto Condensed"),
     axis.text.x = element_text(size = 10, angle = 30, vjust = 0.55),
     axis.text.y = element_text(size = 15, hjust = 0.5),
     axis.title.x = element_text(size = 18, face = "bold", vjust = -0.6, color = "#3f4c5e"),
     axis.title.y = element_text(size = 18, face = "bold", vjust = 1, color = "#3f4c5e"),
-    legend.position = "none",
     plot.title = element_text(size = 25, face = "bold", color = "#3f4c5e"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    panel.grid.major.y = element_line(color = "#F1F1F1"),
     panel.background = element_rect(fill = "#E3E3E3"),
     plot.background = element_rect(fill = "#F1F1F1", color = "#F1F1F1")
-  ) +
-  scale_x_discrete(limits = c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")) +
-  labs(title = "Cumulative Pages Read by Month", x = "Month", y = "Pages")
+  )
 
+# display the plot
 sum_linechart
 
 ```
 
 I read a total of `r sum(data$Pages)` pages this year.\
 I read the most pages in `r table$month[which.max(table$page_sums)]` reading a total of `r max(table$page_sums)` pages that month.
+
+# **Authors**
+
+```{r echo=FALSE, fig.align = "center"}
+
+# create a data frame that is a frequency table for the authors
+authors <- count(data, Author)
+
+# create another data frame, this time excluding any author with a frequency < 2
+authors_exc <- (authors[which(authors$n != 1),])
+
+# create a final data frame reordered, an ascending order
+authors_exc_reordered <- authors_exc %>% arrange(n)
+
+## build barplot
+
+# initialize
+barplot_author <- ggplot(data = authors_exc, aes(x = Author, y = n)) + 
+  # flip the coordinates
+  coord_flip() +
+  # plot the bars
+  geom_col(width = 0.85, fill = "#3f4c5e") +
+  #add the data labels
+  geom_text(aes(label = n), hjust = -0.3, color = "#3f4c5e", fontface = "bold", family = "Roboto Condensed") +
+  # change the limits of the y axis (flipped)
+  scale_y_continuous(limits = c(0,20)) +
+  # change the x axis (flipped) limits to be displayed in decreasing order
+  scale_x_discrete(limits = c(authors_exc_reordered[,1])) +
+  # add plot labels
+  labs(title = "Books Read by Author (Excluding one-offs)", x = "Author", y = "Count") +
+  # add theme elements
+  theme(
+    aspect.ratio = 9/16,
+    plot.margin = margin(1, 1, 1, 1, "cm"),
+    text = element_text(family = "Roboto Condensed"),
+    axis.text.x = element_text(size = 10, vjust = 0.1),
+    axis.text.y = element_text(size = 10, angle = 35, hjust = 0.5),
+    axis.title.x = element_text(size = 18, face = "bold", vjust = -0.6, color = "#3f4c5e"),
+    axis.title.y = element_text(size = 18, face = "bold", vjust = 1, color = "#3f4c5e"),
+    plot.title = element_text(size = 21, face = "bold", color = "#3f4c5e"),
+    panel.grid = element_blank(),
+    panel.background = element_rect(fill = "#E3E3E3"),
+    plot.background = element_rect(fill = "#F1F1F1", color = "#F1F1F1")
+  )
+
+# display the plot
+barplot_author
+
+```
+
+The author I read most from this year was `r authors[which(authors$n == max((authors[which(authors$n != 1),2]))),1]`. I read a total a total of `r max((authors[which(authors$n != 1),2]))` of their books.\
+Click this `r colorize("link", "#0000EE")` **?????** to read more about that author.
 
 # **Reviews**
 
