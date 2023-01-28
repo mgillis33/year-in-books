@@ -29,6 +29,9 @@ h4.author {
 library(tidyverse)
 library(knitr)
 
+# set date
+date <- "2022"
+
 # load data
 data <- read.csv("/Users/mgillis/Desktop/Projects/year-in-books/2022/Goodreads 2022.csv")
 
@@ -40,12 +43,7 @@ getmode <- function(v) {
 
 # create colorize function
 colorize <- function(x, color) {
-  if (knitr::is_latex_output()) {
-    sprintf("\\textcolor{%s}{%s}", color, x)
-  } else if (knitr::is_html_output()) {
-    sprintf("<span style='color: %s;'>%s</span>", color,
-      x)
-  } else x
+  sprintf("<span style='color: %s;'>%s</span>", color, x)
 }
 
 # create inline function to format numbers and conditional values
@@ -53,8 +51,8 @@ inline_format <- function(x) {
   if(is.numeric(x)) {
     if(abs(x)-round(x) == 0){
       y <- format(x, big.mark = ",")
-    }else {
-      y <- x
+    } else {
+      y <- format(x, digits = 2, nsmall = 2)
     }
   } else {
     y <- x
@@ -71,9 +69,9 @@ knit_hooks$set(inline=inline_format)
 ---
 Every year I track the books that I read through the website Goodreads. Goodreads is a website that began in 2006, and has since been purchased by Amazon. It allows for a user to select books from their extensive catalog, adding the books to shelves like "Read" and "Want to Read." Users can also rate books using a 5 star rating system.
 
-At the end of every year, Goodreads compiles a "Year in Books" for each user. It displays different data, such as total pages read, total books read, and average rating. I found myself wishing that Goodreads would provide more in this annual summary, which lead me to realize that all of the data I needed to create my own exists within the Goodreads catlogue already.
+At the end of every year, Goodreads compiles a "Year in Books" for each user. It displays different data, such as total pages read, total books read, and average rating. I found myself wishing that Goodreads would provide more in this annual summary, which lead me to realize that all of the data I needed to create my own exists within the Goodreads catalog already.
 
-Without further ado, here is my year in books:
+Without further ado, here is my `r date` year in books:
 
 # **Books**
 
@@ -248,8 +246,9 @@ sum_linechart
 
 ```
 
-I read a total of `r sum(data$Pages)` pages this year.\
-I read the most pages in `r table$month[which.max(table$page_sums)]` reading a total of `r max(table$page_sums)` pages that month.
+I read a total of `r sum(data$Pages)` pages this year. I read an average of `r round(mean(data$Pages))` pages per book.\
+I read the most pages in `r table$month[which.max(table$page_sums)]` reading a total of `r max(table$page_sums)` pages that month.\
+The longest book I read this year was `r colorize(data$Author[which(data$Pages == max(data$Pages))], "#0000EE")`'s `r colorize(data$Title[which(data$Pages == max(data$Pages))], "#0000EE")`, which has `r max(data$Pages)` pages.
 
 # **Authors**
 
@@ -300,10 +299,10 @@ barplot_author
 
 ```
 
-The author I read most from this year was `r authors[which(authors$n == max((authors[which(authors$n != 1),2]))),1]`. I read a total a total of `r max((authors[which(authors$n != 1),2]))` of their books.\
-Click this `r colorize("link", "#0000EE")` **?????** to read more about that author.
+The author I read most from this year was `r colorize(authors[which(authors$n == max((authors[which(authors$n != 1),2]))),1], "#0000EE")`. I read a total of `r max((authors[which(authors$n != 1),2]))` of their books.\
+There were `r sum(authors$n[authors$n == 1])` "one-off" authors, or authors from which I only read a single book.
 
-# **Reviews**
+# **Ratings**
 
 ```{r echo=FALSE, warning=FALSE, fig.show="hold", out.width="50%"}
 
@@ -316,7 +315,7 @@ my_reviews <- ggplot(data, aes(x = My.Rating)) +
   #add the data labels
   stat_bin(binwidth = 1, geom = "text", aes(label = after_stat(count)), vjust = -0.3, fontface = "bold", family = "Roboto Condensed", color = "#3f4c5e", size = 5) +
   # add plot labels
-  labs(title = "Distribution of My Ratings", x = "Rating (5 Star)", y = "Count") +
+  labs(title = "Distribution of My Ratings", x = "Rating (5 Star Scale)", y = "Count") +
   # change the limits of the y-axis
   scale_y_continuous(limits = c(0,20)) +
   # add theme elements
@@ -337,18 +336,71 @@ my_reviews <- ggplot(data, aes(x = My.Rating)) +
 # display the plot
 my_reviews
 
+## build histogram
 
+# initialize
+gr_reviews <- ggplot(data, aes(x = GR.Rating)) +
+  # plot the bars
+  geom_histogram(binwidth = 0.1, fill = "#3f4c5e") +
+  #add the data labels
+  stat_bin(binwidth = 0.1, geom = "text", aes(label = after_stat(if_else (condition = count > 0, as.character(count), ""))), vjust = -0.3, fontface = "bold", family = "Roboto Condensed", color = "#3f4c5e", size = 5) +
+  # add plot labels
+  labs(title = "Distribution of Goodreads Ratings", x = "Rating (5 Star Scale)", y = "Count") +
+  # change the limits of the x-axis
+  scale_x_continuous(limits = c(3,5.1)) +
+  # change the limits of the y-axis
+  scale_y_continuous(limits = c(0,16)) +
+  # add theme elements
+  theme(
+    aspect.ratio = 9/16,
+    plot.margin = margin(1, 1, 1, 1, "cm"),
+    text = element_text(family = "Roboto Condensed"),
+    axis.text.x = element_text(size = 10, vjust = 0.1),
+    axis.text.y = element_text(size = 10, hjust = 0.5),
+    axis.title.x = element_text(size = 18, face = "bold", vjust = -0.6, color = "#3f4c5e"),
+    axis.title.y = element_text(size = 18, face = "bold", vjust = 1, color = "#3f4c5e"),
+    plot.title = element_text(size = 25, face = "bold", color = "#3f4c5e"),
+    panel.grid = element_blank(),
+    panel.background = element_rect(fill = "#E3E3E3"),
+    plot.background = element_rect(fill = "#F1F1F1", color = "#F1F1F1")
+  )
+
+# display the plot
+gr_reviews
+
+```
+
+I reviewed a total of `r length(data$My.Rating[which(data$My.Rating != 0)])` books this year. The average rating that I gave to a book was `r mean(data$My.Rating[which(data$My.Rating != 0)])` `r colorize("Stars", "#3f4c5e")`.\
+I gave `r length(which(data$My.Rating == 5))` books 5 Stars this year.\
+The average rating from Goodreads users of books that I read this year was `r mean(data$GR.Rating)` `r colorize("Stars", "#3f4c5e")`.
+
+# **Books Read** {.color-tabs .tabset}
+
+## All Books Read
+Here are all the books I read in `r date`:
+
+```{r echo=FALSE}
+
+kable(data[,(1:7)], col.names = c("Month Finished","Title","Author","Genre","Pages","My Rating","Goodreads Rating"))
+
+```
+
+## Favorite Books Read
+```{r echo=FALSE}
+
+kable(data[which(data$Favorite == "Y"),(1:7)], col.names = c("Month Finished","Title","Author","Genre","Pages","My Rating","Goodreads Rating"), row.names = FALSE)
 
 ```
 
 
-# **All Books Read**
-
-
-
 # **Sources**
-
-https://bookdown.org/yihui/rmarkdown-cookbook/font-color.html
-
-https://www.youtube.com/watch?v=a2MedFEQTeA
+  
+* **Packages:**
+    + Tidyverse: https://www.tidyverse.org/
+    + Knitr: https://cran.r-project.org/web/packages/knitr/index.html
+    
+* **Functions:**
+    + Getmode: https://www.tutorialspoint.com/r/r_mean_median_mode.htm
+    + Colorize: https://bookdown.org/yihui/rmarkdown-cookbook/font-color.html
+    + Inline Hook: https://www.youtube.com/watch?v=a2MedFEQTeA
 

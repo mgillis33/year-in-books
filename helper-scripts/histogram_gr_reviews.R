@@ -7,15 +7,17 @@ data <- read.csv("/Users/mgillis/Desktop/Projects/year-in-books/2022/Goodreads 2
 ## build histogram
 
 # initialize
-my_reviews <- ggplot(data, aes(x = My.Rating)) +
+gr_reviews <- ggplot(data, aes(x = GR.Rating)) +
   # plot the bars
-  geom_histogram(binwidth = 1, fill = "#3f4c5e") +
+  geom_histogram(binwidth = 0.1, fill = "#3f4c5e") +
   #add the data labels
-  stat_bin(binwidth = 1, geom = "text", aes(label = after_stat(count)), vjust = -0.3, fontface = "bold", family = "Roboto Condensed", color = "#3f4c5e", size = 5) +
+  stat_bin(binwidth = 0.1, geom = "text", aes(label = after_stat(if_else (condition = count > 0, as.character(count), ""))), vjust = -0.3, fontface = "bold", family = "Roboto Condensed", color = "#3f4c5e", size = 5) +
   # add plot labels
-  labs(title = "Distribution of My Ratings", x = "Rating (5 Star Scale)", y = "Count") +
+  labs(title = "Distribution of Goodreads Ratings", x = "Rating (5 Star Scale)", y = "Count") +
+  # change the limits of the x-axis
+  scale_x_continuous(limits = c(3,5.1)) +
   # change the limits of the y-axis
-  scale_y_continuous(limits = c(0,20)) +
+  scale_y_continuous(limits = c(0,16)) +
   # add theme elements
   theme(
     aspect.ratio = 9/16,
@@ -32,4 +34,4 @@ my_reviews <- ggplot(data, aes(x = My.Rating)) +
   )
 
 # display the plot
-my_reviews
+gr_reviews
