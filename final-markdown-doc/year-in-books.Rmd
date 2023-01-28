@@ -27,6 +27,7 @@ h4.author {
 
 # load packages
 library(tidyverse)
+library(knitr)
 
 # load data
 data <- read.csv("/Users/mgillis/Desktop/Projects/year-in-books/2022/Goodreads 2022.csv")
@@ -47,10 +48,27 @@ colorize <- function(x, color) {
   } else x
 }
 
+# create inline function to format numbers and conditional values
+inline_format <- function(x) {
+  if(is.numeric(x)) {
+    if(abs(x)-round(x) == 0){
+      y <- format(x, big.mark = ",")
+    }else {
+      y <- x
+    }
+  } else {
+    y <- x
+  }
+  
+  x <- colorize(paste0("**",y,"**"), "#3f4c5e")
+  
+}
+
+knit_hooks$set(inline=inline_format)
 ```
 
 ---
-Every year I track the books that I read through the website Goodreads. Goodreads is a website that began in 2006, and has since been purchased by Amazon, that allows for a user to select books from their extensive catalog, adding the books to shelves like "Read" and "Want to Read." Users can also rate books using a 5 star rating system.
+Every year I track the books that I read through the website Goodreads. Goodreads is a website that began in 2006, and has since been purchased by Amazon. It allows for a user to select books from their extensive catalog, adding the books to shelves like "Read" and "Want to Read." Users can also rate books using a 5 star rating system.
 
 At the end of every year, Goodreads compiles a "Year in Books" for each user. It displays different data, such as total pages read, total books read, and average rating. I found myself wishing that Goodreads would provide more in this annual summary, which lead me to realize that all of the data I needed to create my own exists within the Goodreads catlogue already.
 
@@ -122,9 +140,9 @@ by_genre <- base + geom_bar(aes(fill = Genre), width = 0.85) + coord_flip() +
 by_genre
 ```
 
-I read a total of **`r nrow(data)`** books this year.\
-The genre I read the most of this year was **`r colorize(getmode(data$Genre),"#3f4c5e")`**, with a total of **`r colorize(max(table(data$Genre)),"#3f4c5e")` `r colorize(getmode(data$Genre),"#3f4c5e")`** books read.\
-I read the most books in **`r colorize(getmode(data$Month),"#3f4c5e")`**, with a total of **`r colorize(max(table(data$Month)), "#3f4c5e")`** books read that month.
+I read a total of `r nrow(data)` books this year.\
+The genre I read the most of this year was `r getmode(data$Genre)`, with a total of `r max(table(data$Genre))` `r getmode(data$Genre)` books read.\
+I read the most books in `r getmode(data$Month)`, with a total of `r max(table(data$Month))` books read that month.
 
 # **Pages**
 ```{r echo=FALSE, fig.show="hold", out.width="50%"}
@@ -231,8 +249,8 @@ sum_linechart
 
 ```
 
-I read a total of **`r sum(data$Pages)`** this year.\
-I read the most pages in **`r colorize(table$month[which.max(table$page_sums)], "#3f4c5e")`** reading a total of **`r colorize(max(table$page_sums), "#3f4c5e")`** pages that month.
+I read a total of `r sum(data$Pages)` pages this year.\
+I read the most pages in `r table$month[which.max(table$page_sums)]` reading a total of `r max(table$page_sums)` pages that month.
 
 # **Reviews**
 
@@ -241,3 +259,6 @@ I read the most pages in **`r colorize(table$month[which.max(table$page_sums)], 
 # **Sources**
 
 https://bookdown.org/yihui/rmarkdown-cookbook/font-color.html
+
+https://www.youtube.com/watch?v=a2MedFEQTeA
+
