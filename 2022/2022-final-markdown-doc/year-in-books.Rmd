@@ -386,12 +386,13 @@ kable(data[,(1:7)], col.names = c("Month Finished","Title","Author","Genre","Pag
 ```
 
 ## Favorite Books Read
+Here are my favorite books from `r date`:
+
 ```{r echo=FALSE}
 
 kable(data[which(data$Favorite == "Y"),(1:7)], col.names = c("Month Finished","Title","Author","Genre","Pages","My Rating","Goodreads Rating"), row.names = FALSE)
 
 ```
-
 
 # **Sources**
   
